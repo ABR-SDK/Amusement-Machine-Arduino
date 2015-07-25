@@ -1,4 +1,4 @@
-#include <arduino.h>
+#include <Arduino.h>
 #include "misc.h"
 #include "slservo.h"
 #include "slconfig.h"

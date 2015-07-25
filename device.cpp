@@ -1,4 +1,4 @@
-#include <arduino.h>
+#include <Arduino.h>
 #include "device.h"
 #include "timer.h"
 #include "misc.h"

@@ -1,6 +1,6 @@
 #include <avr/wdt.h>
 #include <EEPROM.h>
-#include <arduino.h>
+#include <Arduino.h>
 #include "slconfig.h"
 #include "command.h"
 #include "device.h"

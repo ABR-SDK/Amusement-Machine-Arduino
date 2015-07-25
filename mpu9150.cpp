@@ -29,7 +29,7 @@
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include <EEPROM.h>
-#include <arduino.h>
+#include <Arduino.h>
 #include "timer.h"
 #include "Wire.h"
 #include "misc.h"

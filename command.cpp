@@ -1,4 +1,4 @@
-#include <arduino.h>
+#include <Arduino.h>
 #include "slconfig.h"
 #include "command.h"
 #include "device.h"

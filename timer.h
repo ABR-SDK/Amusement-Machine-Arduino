@@ -1,6 +1,6 @@
 #ifndef __SLTIMER__
 #define __SLTIMER__
-#include <arduino.h>
+#include <Arduino.h>
 
 typedef void (*timer_callback)();
 #define TIMER_REPEAT 32767
