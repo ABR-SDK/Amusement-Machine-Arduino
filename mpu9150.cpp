@@ -74,6 +74,6 @@ void mpu9150_setup()
 		isInited = true;
 		Serial.println(F("log(\"init on primary addresses ok\")"));
 	}  
-	timer::getInstance()->add_timer(5000,TIMER_REPEAT,mpu9150_update);
+	timer::getInstance()->add_timer(100,TIMER_REPEAT,mpu9150_update);
 }
 

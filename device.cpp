@@ -54,7 +54,7 @@ device* DeviceManager::findDevice(const char* p) {
 	return dev;
 }
 
-void  DeviceManger::device_all_setup() {
+void  DeviceManager::device_all_setup() {
 	int device_nums = sizeof(devs)/sizeof(device) - 1;
 	
 	for(int i = 0;i < device_nums;i++) {

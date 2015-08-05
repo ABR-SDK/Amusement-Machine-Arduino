@@ -32,7 +32,7 @@ void motor_init() {
 
 void motor_go(int args,char (*argv)[MAX_ARGUMENT_LENGTH]) {
 	int p_s,s_s,vl_s,vr_s;
-	if(args != 3) {
+	if(args != 4) {
 		return;
 	}
 	

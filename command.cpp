@@ -97,7 +97,7 @@ bool command::getCommand() {
 void command::dispatch() {
 	device* dev = NULL;
 	
-	dev = DeviceManger::findDevice(parseMethod);
+	dev = DeviceManager::findDevice(parseMethod);
 	if(dev != NULL)
 		dev->e_func(args,argv);
 	

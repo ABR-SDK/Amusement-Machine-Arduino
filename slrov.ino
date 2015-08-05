@@ -45,7 +45,7 @@ void setup() {
     EEPROM.write(0, 0);
   }
 
-  DeviceManger::device_all_setup();
+  DeviceManager::device_all_setup();
 }
 
 void loop() {
