@@ -15,6 +15,26 @@ Servo starboard;
 Servo vertical_left;
 Servo vertical_right;
 
+void esc_init() {
+	pinMode(16,OUTPUT);
+	digitalWrite(16,HIGH);
+}
+
+void esc_switch(int args,char (*argv)[MAX_ARGUMENT_LENGTH]) {
+	int arg0 = 0;
+	
+	if(args != 1)
+		return;
+	
+	arg0 = parse_int_dec(argv[0]);
+	
+	if(arg0 == 0) {
+		digitalWrite(16,LOW);
+	}else {
+		digitalWrite(16,HIGH);
+	}
+}
+
 void motor_init() {
 	
 	port.attach(PORT_PIN);

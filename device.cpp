@@ -28,6 +28,7 @@ void example_exec(int args,char (*argv)[MAX_ARGUMENT_LENGTH]) {
  *
  ********************************************/
 device DeviceManager::devs[] = {
+	{"esc_switch",esc_init,esc_switch},
 	{"go",motor_init,motor_go},
 	{"",0,0},
 };

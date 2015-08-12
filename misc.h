@@ -26,5 +26,9 @@ void ms5803_setup();
 
 void motor_init();
 void motor_go(int args,char (*argv)[MAX_ARGUMENT_LENGTH]);
+
+void esc_init();
+void esc_switch(int args,char (*argv)[MAX_ARGUMENT_LENGTH]);
+
 #endif
 
