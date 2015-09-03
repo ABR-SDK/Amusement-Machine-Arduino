@@ -1,3 +1,5 @@
+#include "slconfig.h"
+#if(HAS_MPU9150)
 ////////////////////////////////////////////////////////////////////////////
 //
 //  This file is part of MPU9150Lib
@@ -22,38 +24,73 @@
 //  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "CalLib.h"
-#include <EEPROM.h>
+#ifdef __SAM3X8E__
 
-void calLibErase()
+// Due version
+
+#include "DueFlash.h"
+
+DueFlash flash;
+
+void calLibErase(byte device)
 {
-    EEPROM.write(0, 0);                            // just destroy the valid byte
+    uint32_t data = 0;
+
+    flash.write(CALLIB_START + sizeof(CALLIB_DATA) * device, &data, 1); // just destroy the valid byte
 }
 
-void calLibWrite(CALLIB_DATA *calData)
+void calLibWrite(byte device, CALLIB_DATA *calData)
+{
+    calData->valid = CALLIB_DATA_VALID;
+
+    flash.write(CALLIB_START + sizeof(CALLIB_DATA) * device, (uint32_t *)calData, sizeof(CALLIB_DATA) / 4);
+}
+
+boolean calLibRead(byte device, CALLIB_DATA *calData)
+{
+    memcpy(calData, CALLIB_START + sizeof(CALLIB_DATA) * device, sizeof(CALLIB_DATA));
+    return calData->valid == CALLIB_DATA_VALID;
+}
+
+#else
+
+// AVR version
+
+#include <EEPROM.h>
+
+void calLibErase(byte device)
+{
+    EEPROM.write(CALLIB_START, 0); // just destroy the valid byte
+}
+
+void calLibWrite(byte device, CALLIB_DATA *calData)
 {
   byte *ptr = (byte *)calData;
   byte length = sizeof(CALLIB_DATA);
+  int eeprom = CALLIB_START;
 
   calData->valid = CALLIB_DATA_VALID;
   
   for (byte i = 0; i < length; i++)
-    EEPROM.write(i, *ptr++);
+    EEPROM.write(eeprom + i, *ptr++);
 }
 
-boolean calLibRead(CALLIB_DATA *calData)
+boolean calLibRead(byte device, CALLIB_DATA *calData)
 {
   byte *ptr = (byte *)calData;
   byte length = sizeof(CALLIB_DATA);
+  int eeprom = CALLIB_START;
 
   calData->magValid = false;
   calData->accelValid = false;
 
-  if ((EEPROM.read(0) != CALLIB_DATA_VALID_LOW) ||   
-      (EEPROM.read(1) != CALLIB_DATA_VALID_HIGH))
+  if ((EEPROM.read(eeprom) != CALLIB_DATA_VALID_LOW) ||
+      (EEPROM.read(eeprom + 1) != CALLIB_DATA_VALID_HIGH))
     return false;                                  // invalid data
     
   for (byte i = 0; i < length; i++)
-    *ptr++ = EEPROM.read(i);
+    *ptr++ = EEPROM.read(eeprom + i);
   return true;  
 }
-
+#endif
+#endif

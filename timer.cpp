@@ -58,3 +58,20 @@ timer* timer::getInstance() {
 	return &_ins_timer;
 }
 
+ElapseTimer::ElapseTimer() {
+    reset();
+}
+
+boolean ElapseTimer::elapsed(unsigned long milliseconds) {
+    if (now() - last > milliseconds) {
+        last = now();
+        return true;
+    }
+    return false;
+}
+
+void ElapseTimer::reset() {
+    start = millis();
+    last = start;
+}
+

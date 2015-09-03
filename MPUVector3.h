@@ -42,4 +42,3 @@ void MPUVector3CrossProduct(MPUVector3 a, MPUVector3 b, MPUVector3 d);
 
 
 #endif /* MPUVECTOR3_H_ */
-

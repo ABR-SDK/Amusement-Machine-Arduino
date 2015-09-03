@@ -1,3 +1,5 @@
+#include "slconfig.h"
+#if(HAS_MPU9150)
 ////////////////////////////////////////////////////////////////////////////
 //
 //  This file is part of MPU9150Lib
@@ -96,4 +98,4 @@ void MPUQuaternionMultiply(const MPUQuaternion qa, const MPUQuaternion qb, MPUQu
   qd[QUAT_Y] = qa[QUAT_W] * vb[VEC3_Y] + qb[QUAT_W] * va[VEC3_Y] + crossAB[VEC3_Y];
   qd[QUAT_Z] = qa[QUAT_W] * vb[VEC3_Z] + qb[QUAT_W] * va[VEC3_Z] + crossAB[VEC3_Z];
 }
-
+#endif

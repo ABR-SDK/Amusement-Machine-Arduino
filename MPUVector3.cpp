@@ -1,3 +1,5 @@
+#include "slconfig.h"
+#if(HAS_MPU9150)
 ////////////////////////////////////////////////////////////////////////////
 //
 //  This file is part of MPU9150Lib
@@ -34,4 +36,4 @@ void MPUVector3CrossProduct(MPUVector3 a, MPUVector3 b, MPUVector3 d)
   d[VEC3_Y] = a[VEC3_Z] * b[VEC3_X] - a[VEC3_X] * b[VEC3_Z];
   d[VEC3_Z] = a[VEC3_X] * b[VEC3_Y] - a[VEC3_Y] * b[VEC3_X];
 }
-
+#endif

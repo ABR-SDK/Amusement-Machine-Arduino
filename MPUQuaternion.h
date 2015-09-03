@@ -48,4 +48,3 @@ inline float MPUQuaternionNorm(MPUQuaternion q)
 
 
 #endif /* MPUQUATERNION_H_ */
-

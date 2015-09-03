@@ -2,8 +2,11 @@
 #define __SLTIMER__
 #include <Arduino.h>
 
+#define SEC_PER_MIN 60
+#define SEC_PER_HOUR 3600
 typedef void (*timer_callback)();
 #define TIMER_REPEAT 32767
+
 struct _timer_element {
 	unsigned long outtime;
 	unsigned long intervaltime;
@@ -29,6 +32,21 @@ private:
 	_timer_element _time[32];
 	byte _elemcount;
 	byte _pos;
+};
+
+
+class ElapseTimer {
+
+  private:
+    unsigned long start;
+    unsigned long last;
+
+  public:
+    ElapseTimer();
+    unsigned long now() { return millis(); }
+    boolean elapsed(unsigned long milliseconds);
+    void reset();
+
 };
 #endif
 

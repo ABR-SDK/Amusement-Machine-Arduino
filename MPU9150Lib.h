@@ -44,6 +44,15 @@ public:
 
   MPU9150Lib();
 
+  // selectDevice() can be called to select a device:
+  //
+  //   0 = device at address 0x68 (default)
+  //   1 = device at address 0x69
+  //
+  // selectDevice() must be called before init()
+
+  void selectDevice(int device);
+
   // these two functions control if calibration data is used. Must be called before init()
   // if defaults (use mag and accel cal) aren't required.
 
@@ -57,13 +66,22 @@ public:
   //   1 = just use magnetometer with no input from gyros
   //   2-n = mix the two. Higher numbers decrease correction from magnetometer
   // It returns false if something went wrong with the initialization.
+  // magRate is the magnetometer update rate in Hz. magRate <= mpuRate.
+  //   Also, magRate must be <= 100Hz.
+  // lpf is the low pass filter setting - can be between 5Hz and 188Hz.
+  //   0 means let the MotionDriver library decide.
     
-  boolean init(int mpuRate, int magMix = 5);
+  boolean init(int mpuRate, int magMix = 5, int magRate = 10, int lpf = 0);
   
   //  read checks to see if there's been a new update.
   //  returns true if yes, false if not.
   
   boolean read();
+
+  // disableAccelCal can be called while running to disable
+  // accel bias offsets while performing accel calibration
+
+  void disableAccelCal();
 
   //  check if calibration in use
   
@@ -101,7 +119,10 @@ private:
   CALLIB_DATA m_calData;                                    // calibration data
   boolean m_useMagCalibration;                              // true if use mag calibration
   boolean m_useAccelCalibration;                            // true if use mag calibration
+  byte m_device;                                            // IMU device index
   int m_magMix;                                             // controls gyro and magnetometer mixing for yaw
+  unsigned long m_magInterval;                              // interval between mag reads in mS
+  unsigned long m_lastMagSample;                            // last time mag was read
 
   void dataFusion();                                        // fuse mag data with the dmp quaternion
 
@@ -120,7 +141,8 @@ private:
   short m_accelXRange;										// range of accel X
   short m_accelYRange;										// range of accel Y
   short m_accelZRange;										// range of accel Z
+  long m_accelOffset[3];                                    // offsets for accel
+
 };
 
 #endif // _MPU9150LIB_H_
-

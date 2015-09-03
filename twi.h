@@ -37,9 +37,7 @@
   #define TWI_MTX   2
   #define TWI_SRX   3
   #define TWI_STX   4
-
-  #define TWI_MAX_ITERS 100000UL
-
+  
   void twi_init(void);
   void twi_setAddress(uint8_t);
   uint8_t twi_readFrom(uint8_t, uint8_t*, uint8_t, uint8_t);
@@ -50,8 +48,6 @@
   void twi_reply(uint8_t);
   void twi_stop(void);
   void twi_releaseBus(void);
-  uint8_t twi_timeout_guard(uint8_t);
-  uint32_t twi_nacks(void);
-  uint32_t twi_acks(void);
-  uint8_t twi_timeouts(void);
+
 #endif
+

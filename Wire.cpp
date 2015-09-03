@@ -15,7 +15,7 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
+ 
   Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
 */
 
@@ -75,6 +75,11 @@ void TwoWire::begin(int address)
   begin((uint8_t)address);
 }
 
+void TwoWire::setClock(uint32_t frequency)
+{
+  TWBR = ((F_CPU / frequency) - 16) / 2;
+}
+
 uint8_t TwoWire::requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop)
 {
   // clamp to buffer length
@@ -125,8 +130,8 @@ void TwoWire::beginTransmission(int address)
 //	Originally, 'endTransmission' was an f(void) function.
 //	It has been modified to take one parameter indicating
 //	whether or not a STOP should be performed on the bus.
-//	Calling endTransmission(false) allows a sketch to
-//	perform a repeated start.
+//	Calling endTransmission(false) allows a sketch to 
+//	perform a repeated start. 
 //
 //	WARNING: Nothing in the library keeps track of whether
 //	the bus tenure has been properly ended with a STOP. It
@@ -169,7 +174,7 @@ size_t TwoWire::write(uint8_t data)
     // put byte in tx buffer
     txBuffer[txBufferIndex] = data;
     ++txBufferIndex;
-    // update amount in buffer
+    // update amount in buffer   
     txBufferLength = txBufferIndex;
   }else{
   // in slave send mode
@@ -205,23 +210,13 @@ int TwoWire::available(void)
   return rxBufferLength - rxBufferIndex;
 }
 
-float TwoWire::nackpercent(void){
-  uint32_t a = twi_acks();
-  uint32_t n = twi_nacks();
-  return ((float)n/(n+a))*100.0;
-}
-
-uint8_t TwoWire::timeouts(void){
-  return twi_timeouts();
-}
-
 // must be called in:
 // slave rx event callback
 // or after requestFrom(address, numBytes)
 int TwoWire::read(void)
 {
   int value = -1;
-
+  
   // get each successive byte on each call
   if(rxBufferIndex < rxBufferLength){
     value = rxBuffer[rxBufferIndex];
@@ -237,7 +232,7 @@ int TwoWire::read(void)
 int TwoWire::peek(void)
 {
   int value = -1;
-
+  
   if(rxBufferIndex < rxBufferLength){
     value = rxBuffer[rxBufferIndex];
   }
@@ -266,7 +261,7 @@ void TwoWire::onReceiveService(uint8_t* inBytes, int numBytes)
   // copy twi rx buffer into local read buffer
   // this enables new reads to happen in parallel
   for(uint8_t i = 0; i < numBytes; ++i){
-    rxBuffer[i] = inBytes[i];
+    rxBuffer[i] = inBytes[i];    
   }
   // set rx iterator vars
   rxBufferIndex = 0;
@@ -305,3 +300,4 @@ void TwoWire::onRequest( void (*function)(void) )
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
 TwoWire Wire = TwoWire();
+

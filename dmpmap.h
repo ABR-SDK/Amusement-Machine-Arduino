@@ -262,4 +262,3 @@ extern "C"
 }
 #endif
 #endif // DMPMAP_H
-

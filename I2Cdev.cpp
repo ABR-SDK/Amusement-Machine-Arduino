@@ -1,3 +1,5 @@
+#include "slconfig.h"
+#if(HAS_MPU9150)
 // I2Cdev library collection - Main I2C device class
 // Abstracts bit and byte I2C R/W functions into a convenient class
 // 6/9/2012 by Jeff Rowberg <jeff@rowberg.net>
@@ -42,7 +44,7 @@ THE SOFTWARE.
 */
 
 #include "I2Cdev.h"
-
+//#define I2CDEV_SERIAL_DEBUG
 /** Default constructor.
  */
 I2Cdev::I2Cdev() {
@@ -457,7 +459,11 @@ bool I2Cdev::writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_
     Serial.println(". Done.");
 #endif
 
+#ifdef __SAM3X8E__
+    return status > 0;
+#else
     return status == 0;
+#endif
 }
 
 /** Write multiple words to a 16-bit device register.
@@ -500,7 +506,11 @@ bool I2Cdev::writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16
     Serial.println(". Done.");
 #endif
 
+#ifdef __SAM3X8E__
+    return status > 0;
+#else
     return status == 0;
+#endif
 }
 
 /** Default timeout value for read operations.
@@ -508,5 +518,4 @@ bool I2Cdev::writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16
  */
 uint16_t I2Cdev::readTimeout = I2CDEV_DEFAULT_READ_TIMEOUT;
 
-
-
+#endif
