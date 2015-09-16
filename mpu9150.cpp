@@ -104,11 +104,11 @@ void mpu9150_update() {
 	if (MPU.read()) {
 
 		SLSERIAL.print("MPU9150(");
-		SLSERIAL.print(MPU.m_fusedEulerPose[VEC3_X] * RAD_TO_DEGREE + 180);
+		SLSERIAL.print(MPU.m_fusedEulerPose[VEC3_X] * RAD_TO_DEGREE);
 		SLSERIAL.print(",");
-		SLSERIAL.print(MPU.m_fusedEulerPose[VEC3_Y] * RAD_TO_DEGREE + 180);
+		SLSERIAL.print(MPU.m_fusedEulerPose[VEC3_Y] * RAD_TO_DEGREE);
 		SLSERIAL.print(",");
-		SLSERIAL.print(MPU.m_fusedEulerPose[VEC3_Z] * RAD_TO_DEGREE + 180);
+		SLSERIAL.print(MPU.m_fusedEulerPose[VEC3_Z] * RAD_TO_DEGREE);
 		SLSERIAL.println(")");
 	}
 }
@@ -117,7 +117,7 @@ void mpu9150_setup()
 {	
 	mpu9150_init();
 	
-	timer::getInstance()->add_timer(1000,TIMER_REPEAT,mpu9150_update);
+	timer::getInstance()->add_timer(200,TIMER_REPEAT,mpu9150_update);
 }
 
 /*

@@ -5,7 +5,7 @@
 #include "command.h"
 #include "device.h"
 #include "timer.h"
-//jyfyu
+
 volatile int f_wdt = 0;
 volatile int wdt_times = 0;
 

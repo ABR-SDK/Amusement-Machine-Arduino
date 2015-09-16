@@ -188,5 +188,5 @@ void ms5803_setup() {
 		CalConstant[i] = (((unsigned int)ByteHigh << 8) + ByteLow);
 	}
 	
-	timer::getInstance()->add_timer(1000,TIMER_REPEAT,ms5803_14ba_update);
+	timer::getInstance()->add_timer(200,TIMER_REPEAT,ms5803_14ba_update);
 }
