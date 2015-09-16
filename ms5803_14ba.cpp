@@ -58,7 +58,7 @@ void ms5803_14ba_update() {
 	unsigned int millis_start = millis();
 	while (Wire.available() < 3) {
 		if (io_timeout > 0 && ((unsigned int)millis() - millis_start) > io_timeout) {
-			Serial.println("log:Failed to read Depth from I2C");
+			Serial.println("log(\"Failed to read Depth from I2C\")");
 			return;
 		}
 	}
