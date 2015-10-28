@@ -1,4 +1,4 @@
-SLROV
+Amusement-Machine-Arduino
 -----
 This project is Arduino project for control the remote contol robot <BR>
 
